@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static',filename='product-view.css')}}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="current_user" style="display: none;">{{current_user.is_authenticated}}</div>
+    <div class="main-nav-container" id="main-nav-container">
+        <nav class="nav-bar">
+            <ul class="main-nav" style="margin: 0;">
+                <li><a href="{{url_for('home')}}">Home</a></li>
+                <li><a href="{{url_for('design')}}">Design</a></li>
+                <li><a href="{{url_for('productview',product_type='men')}}">Men</a></li>
+                <li><a href="{{url_for('productview',product_type='women')}}">Women</a></li>
+                <li><a href="{{url_for('productview',product_type='popular')}}">Popular</a></li>
+                <li><a href="{{url_for('productview',product_type='winter')}}">WINTER COLLECTION</a></li>
+                {%if current_user.is_authenticated%}
+                    {% if current_user.role == 'CUSTOMER' %}
+                        <li><a href="{{url_for('account')}}">Account</a></li>
+                        <li><a href="{{url_for('logout')}}">Logout</a></li>
+                    {%endif%}
+                {%endif%}
+            </ul>
+
+              <div class="dropdown">
+              <button class="dropbtn"><a href="{{url_for('cart')}}"><i class="fa fa-shopping-cart" style="color: #333;"></i></a><span class="badge" style="color: #333;">{{session['shoppingcart']|length}}</span></button>
+              {%if not current_user.is_authenticated%}
+
+                      <div class="dropdown-content">
+                        <a href="{{url_for('loginreg')}}">Log In</a>
+                        <a href="{{url_for('loginreg')}}">Register</a>
+                      </div>
+
+              {%endif%}
+            </div>
+        </nav>
+
+    </div>
+    <header class="template-header">
+        <h1>{{title}}</h1>
+    </header>
+
+
+    <section class="sidebar-section">
+        <div class="sidebar-body-container">
+            <div class="sidebar-tabs-option">
+
+                <div class="nav flex-column nav-pills sidebar-tabs-wrapper" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <h5>Sub-Categories</h5>
+                    {%for category in categories%}
+                        {%if category == 'popular'%}
+                                    <a class="nav-link {{ 'active' if category==categories[0] else '' }} tab-one" id="v-pills-popular-tab" style="color: #222222;" data-toggle="pill" href="#v-pills-all" role="tab" aria-controls="v-pills-all" aria-selected="true">Our Popular Collection</a>
+                        {%elif category == 'male'%}
+                                    <a class="nav-link {{ 'active' if category==categories[0] else '' }} tab-one" id="v-pills-male-tab" style="color: #222222;" data-toggle="pill" href="#v-pills-male" role="tab" aria-controls="v-pills-all" aria-selected="true">Male</a>
+                        {%elif category == 'female'%}
+                                    <a class="nav-link {{ 'active' if category==categories[0] else '' }} tab-one" id="v-pills-female-tab" style="color: #222222;" data-toggle="pill" href="#v-pills-female" role="tab" aria-controls="v-pills-all" aria-selected="true">Female</a>
+
+                        {%else%}
+                            <a class="nav-link {{ 'active' if category==categories[0] else '' }} tab-one" id="v-pills-{{category.id}}-tab" style="color: #222222;" data-toggle="pill" href="#v-pills-{{category.id}}" role="tab" aria-controls="v-pills-{{category.id}}" aria-selected="true">{{category.name|title}}</a>
+
+                        {%endif%}
+                    {%endfor%}
+
+
+                </div>
+
+            </div>
+
+            <div class="sidebar-tabs-content">
+                <div class="tab-content" id="v-pills-tabContent">
+                {%for category in categories%}
+                                {%if category == 'popular'%}
+                                    <div class="tab-pane fade {{ 'show active' if category==categories[0] else '' }} tab-one-content" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-all-tab">
+
+                                {%elif category == 'male'%}
+                                    <div class="tab-pane fade {{ 'show active' if category==categories[0] else '' }} tab-one-content" id="v-pills-male" role="tabpanel" aria-labelledby="v-pills-male-tab">
+
+                                {%elif category == 'female'%}
+                                    <div class="tab-pane fade {{ 'show active' if category==categories[0] else '' }} tab-one-content" id="v-pills-female" role="tabpanel" aria-labelledby="v-pills-female-tab">
+
+                                {%else%}
+                                    <div class="tab-pane fade {{ 'show active' if category==categories[0] else '' }} tab-one-content" id="v-pills-{{category.id}}" role="tabpanel" aria-labelledby="v-pills-{{category.id}}-tab">
+
+                                {%endif%}
+                        <div class="tab-one-content-header">
+                            <div class="content-header-img">
+
+                                {%if category == 'popular'%}
+                                    <img src="{{url_for('static',filename='html_pics/popular2.jpg')}}" alt="">
+                                {%elif category == 'male'%}
+                                    <img src="{{url_for('static',filename='html_pics/popular2.jpg')}}" alt="">
+                                {%elif category == 'female'%}
+                                    <img src="{{url_for('static',filename='html_pics/popular2.jpg')}}" alt="">
+                                {%else%}
+                                    <img src="{{url_for('static',filename='html_pics/'+category.pic)}}" alt="">
+                                {%endif%}
+                            </div>
+                            {%if category == 'popular'%}
+                                    <h1>Popular Designs</h1>
+
+                                    <p>This is a collection of our most popular designs Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias debitis explicabo harum id neque perspiciatis qui suscipit totam veritatis. Accusantium eveniet mollitia quo repellat sint! Commodi consequatur dolorum libero minus neque nihil officiis provident reprehenderit, rerum voluptatum. Ab aliquam aliquid aperiam asperiores at blanditiis deleniti deserunt dolore eaque error esse eveniet iste nam necessitatibus nemo obcaecati officia porro quaerat quas quibusdam quo quod, repellat sint sit soluta, velit, veniam voluptas. Architecto commodi cumque deleniti doloremque eos iusto minima molestias, mollitia nostrum numquam quae quam quasi quidem quo rem, sint, suscipit vel. </p>
+                            {%elif category == 'male'%}
+                                    <h1>For Male</h1>
+
+                                    <p>This is a collection for males. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aspernatur blanditiis, debitis deleniti, et id iusto numquam provident quasi sequi sunt veritatis! At autem corporis cumque distinctio doloribus eaque eius esse est expedita explicabo facere fuga id illo ipsum itaque iure iusto laudantium maxime minima minus mollitia necessitatibus nemo nihil obcaecati odit perferendis possimus quae, quaerat, quam quo reiciendis sapiente sequi similique sint tenetur voluptas voluptatem. Alias ex, facere inventore molestiae possimus quae qui quibusdam quo ratione, reprehenderit sed totam ut veniam vero voluptates! Commodi illo officia recusandae reprehenderit voluptatibus!</p>
+                            {%elif category == 'female'%}
+                                    <h1>For Female</h1>
+
+                                    <p>This is a collection for females. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad cumque dolor obcaecati optio? Expedita hic ipsum laborum molestias nihil, optio perferendis quisquam, quos recusandae sed sint voluptate! Aperiam debitis dolorem eos eum hic id iste maxime mollitia necessitatibus obcaecati odio officiis pariatur quibusdam quod rerum sequi sit, vitae! Amet animi, asperiores beatae commodi consequatur corporis delectus deleniti deserunt dolore doloremque dolorum est facilis impedit incidunt ipsum iure, laborum maiores molestiae necessitatibus nisi non nulla obcaecati officia omnis optio porro quasi quis quo quod ratione sit, tempore unde vero? Accusantium </p>
+                            {%else%}
+                                    <h1>{{category.name|title}}</h1>
+
+                                    <p>{{category.description}}</p>
+                            {%endif%}
+
+                        </div>
+
+                    <div class="line"></div>
+
+                    <div class="products-wrapper">
+                        {%if category == 'popular'%}
+                            {%for product in products%}
+
+                                        <div class="card-1">
+                                            <div class="card-image">
+                                                <img src="{{url_for('static',filename='html_pics/'+product.main_image)}}" alt="">
+                                            </div>
+                                            <div class="card-content">
+                                                <strong class="product-name"><a href="{{url_for('product',product_id=product.id)}}" class="product-item-link">{{product.name|title}}</a></strong>
+                                                <span class="product-price">PKR {{product.price}}</span>
+                                            </div>
+
+                                        </div>
+
+                            {%endfor%}
+                        {%for product in products%}
+
+                                        <div class="card-1">
+                                            <div class="card-image">
+                                                <img src="{{url_for('static',filename='html_pics/'+product.main_image)}}" alt="">
+                                            </div>
+                                            <div class="card-content">
+                                                <strong class="product-name"><a href="{{url_for('product',product_id=product.id)}}" class="product-item-link">{{product.name|title}}</a></strong>
+                                                <span class="product-price">PKR {{product.price}}</span>
+                                            </div>
+
+                                        </div>
+
+                            {%endfor%}
+                        {%for product in products%}
+
+                                        <div class="card-1">
+                                            <div class="card-image">
+                                                <img src="{{url_for('static',filename='html_pics/'+product.main_image)}}" alt="">
+                                            </div>
+                                            <div class="card-content">
+                                                <strong class="product-name"><a href="{{url_for('product',product_id=product.id)}}" class="product-item-link">{{product.name|title}}</a></strong>
+                                                <span class="product-price">PKR {{product.price}}</span>
+                                            </div>
+
+                                        </div>
+
+                            {%endfor%}
+                        {%elif category == 'male'%}
+                            {%for product in products%}
+                                    {%if product.return_gender()=='male'%}
+                                        <div class="card-1">
+                                            <div class="card-image">
+                                                <img src="{{url_for('static',filename='html_pics/'+product.main_image)}}" alt="">
+                                            </div>
+                                            <div class="card-content">
+                                                <strong class="product-name"><a href="{{url_for('product',product_id=product.id)}}" class="product-item-link">{{product.name|title}}</a></strong>
+                                                <span class="product-price">PKR {{product.price}}</span>
+                                            </div>
+
+                                        </div>
+                                    {%endif%}
+
+                            {%endfor%}
+                        {%for product in products%}
+                                    {%if product.return_gender()=='male'%}
+                                        <div class="card-1">
+                                            <div class="card-image">
+                                                <img src="{{url_for('static',filename='html_pics/'+product.main_image)}}" alt="">
+                                            </div>
+                                            <div class="card-content">
+                                                <strong class="product-name"><a href="{{url_for('product',product_id=product.id)}}" class="product-item-link">{{product.name|title}}</a></strong>
+                                                <span class="product-price">PKR {{product.price}}</span>
+                                            </div>
+
+                                        </div>
+                                    {%endif%}
+
+                            {%endfor%}
+                        {%for product in products%}
+                                    {%if product.return_gender()=='male'%}
+                                        <div class="card-1">
+                                            <div class="card-image">
+                                                <img src="{{url_for('static',filename='html_pics/'+product.main_image)}}" alt="">
+                                            </div>
+                                            <div class="card-content">
+                                                <strong class="product-name"><a href="{{url_for('product',product_id=product.id)}}" class="product-item-link">{{product.name|title}}</a></strong>
+                                                <span class="product-price">PKR {{product.price}}</span>
+                                            </div>
+
+                                        </div>
+                                    {%endif%}
+
+                            {%endfor%}
+                        {%elif category == 'female'%}
+                            {%for product in products%}
+                                    {%if product.return_gender()=='female'%}
+                                        <div class="card-1">
+                                            <div class="card-image">
+                                                <img src="{{url_for('static',filename='html_pics/'+product.main_image)}}" alt="">
+                                            </div>
+                                            <div class="card-content">
+                                                <strong class="product-name"><a href="{{url_for('product',product_id=product.id)}}" class="product-item-link">{{product.name}}</a></strong>
+                                                <span class="product-price">PKR {{product.price}}</span>
+                                            </div>
+
+                                        </div>
+                                    {%endif%}
+
+                            {%endfor%}
+                        {%for product in products%}
+                                    {%if product.return_gender()=='female'%}
+                                        <div class="card-1">
+                                            <div class="card-image">
+                                                <img src="{{url_for('static',filename='html_pics/'+product.main_image)}}" alt="">
+                                            </div>
+                                            <div class="card-content">
+                                                <strong class="product-name"><a href="{{url_for('product',product_id=product.id)}}" class="product-item-link">{{product.name}}</a></strong>
+                                                <span class="product-price">PKR {{product.price}}</span>
+                                            </div>
+
+                                        </div>
+                                    {%endif%}
+
+                            {%endfor%}
+                        {%for product in products%}
+                                    {%if product.return_gender()=='female'%}
+                                        <div class="card-1">
+                                            <div class="card-image">
+                                                <img src="{{url_for('static',filename='html_pics/'+product.main_image)}}" alt="">
+                                            </div>
+                                            <div class="card-content">
+                                                <strong class="product-name"><a href="{{url_for('product',product_id=product.id)}}" class="product-item-link">{{product.name}}</a></strong>
+                                                <span class="product-price">PKR {{product.price}}</span>
+                                            </div>
+
+                                        </div>
+                                    {%endif%}
+
+                            {%endfor%}
+
+                        {%else%}
+                            {%for product in products%}
+                                {%for cat in product.categories%}
+                                    {%if category.id == cat.category_id%}
+
+
+
+                                        <div class="card-1">
+                                            <div class="card-image">
+                                                <img src="{{url_for('static',filename='html_pics/'+product.main_image)}}" alt="">
+                                            </div>
+                                            <div class="card-content">
+                                                <strong class="product-name"><a href="{{url_for('product',product_id=product.id)}}" class="product-item-link">{{product.name|title}}</a></strong>
+                                                <span class="product-price">PKR {{product.price}}</span>
+                                            </div>
+
+                                        </div>
+                                    {%endif%}
+                                {%endfor%}
+                            {%endfor%}
+                        {%for product in products%}
+                                {%for cat in product.categories%}
+                                    {%if category.id == cat.category_id%}
+
+
+
+                                        <div class="card-1">
+                                            <div class="card-image">
+                                                <img src="{{url_for('static',filename='html_pics/'+product.main_image)}}" alt="">
+                                            </div>
+                                            <div class="card-content">
+                                                <strong class="product-name"><a href="{{url_for('product',product_id=product.id)}}" class="product-item-link">{{product.name|title}}</a></strong>
+                                                <span class="product-price">PKR {{product.price}}</span>
+                                            </div>
+
+                                        </div>
+                                    {%endif%}
+                                {%endfor%}
+                            {%endfor%}
+                        {%for product in products%}
+                                {%for cat in product.categories%}
+                                    {%if category.id == cat.category_id%}
+
+
+
+                                        <div class="card-1">
+                                            <div class="card-image">
+                                                <img src="{{url_for('static',filename='html_pics/'+product.main_image)}}" alt="">
+                                            </div>
+                                            <div class="card-content">
+                                                <strong class="product-name"><a href="{{url_for('product',product_id=product.id)}}" class="product-item-link">{{product.name|title}}</a></strong>
+                                                <span class="product-price">PKR {{product.price}}</span>
+                                            </div>
+
+                                        </div>
+                                    {%endif%}
+                                {%endfor%}
+                            {%endfor%}
+
+
+                        {%endif%}
+
+                    </div>
+
+
+                </div>
+                {%endfor%}
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+    <footer>
+		<div class="footer-container">
+			<div class="left-col">
+                <a href="#"><h1>Design & Wear</h1></a>
+				<div class="social-media">
+					<a href="#"
+					   class="fb-icon"><i class="fab fa-facebook fa-2x"></i></a>
+
+					<a href="#"
+					   class="fb-icon"><i class="fab fa-twitter fa-2x"></i></a>
+
+					<a href="#"
+					   class="fb-icon"><i class="fab fa-instagram fa-2x"></i></a>
+
+					<a href="#"
+					   class="fb-icon"><i class="fab fa-linkedin-in fa-2x"></i></a>
+
+				</div>
+			</div>
+
+			<div class="center-col">
+				<h1 class="question">
+					Customer Care
+				</h1>
+				<div class="course-list">
+                    <a href="#" class="course-name">Contact-us</a>
+                    <a href="#" class="course-name">My Account</a>
+                    <a href="#" class="course-name">My Order</a>
+                    <a href="#" class="course-name">Payment</a>
+                </div>
+
+			</div>
+
+			<div class="right-col">
+				<h1>New Arrivals</h1>
+<!--				<div class="footer-border"></div>-->
+				<div class="course-list">
+                    <a href="#" class="course-name">Men</a>
+                    <a href="#" class="course-name">Women</a>
+                    <a href="#" class="course-name">Men - Winter Collection</a>
+                    <a href="#" class="course-name">Women - Winter Collection</a>
+                </div>
+				<a class="footer-register-btn" href="#"><p>Register Now</p></a>
+			</div>
+
+		</div>
+		<div class="footer-lower-border">
+		   <div class="footer-overlay-border">
+			  <small style="color: white; font-weight: 100; font-size: 12px">&copy; Copyright 2020, Orion Inc. . All rights reserved.</small>
+		   </div>
+		</div>
+	</footer>
+
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.6.0/umd/popper.min.js" integrity="sha512-BmM0/BQlqh02wuK5Gz9yrbe7VyIVwOzD1o40yi1IsTjriX/NGF37NyXHfmFzIlMmoSIBXgqDiG1VNU6kB5dBbA==" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js" integrity="sha512-IQLehpLoVS4fNzl7IfH8Iowfm5+RiMGtHykgZJl9AWMgqx0AmJ6cRWcB+GaGVtIsnC4voMfm8f2vwtY+6oPjpQ==" crossorigin="anonymous"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+<script>
+    window.onscroll = function() {myFunction()};
+
+    var header = document.getElementById("main-nav-container");
+    var sticky = header.offsetTop;
+
+    function myFunction() {
+      if (window.pageYOffset > sticky) {
+        header.classList.add("sticky");
+      } else {
+        header.classList.remove("sticky");
+      }
+    }
+
+    $(document).ready(function () {
+       $('.design-section-design-button').click(function () {
+          window.location.href = 'design'
+       });
+        $('.tab-content').on('click','a.product-item-link',function (e) {
+            e.preventDefault();
+
+            if ($('.current_user').html()==='True'){
+                window.location.href = this;
+            }
+            else{
+                window.location.href = '/loginreg';
+            };
+        });
+
+    });
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{{url_for('static',filename='admin-panel.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='tail.select-default.css')}}">
+    <script src="https://kit.fontawesome.com/2b6331dcd5.js" crossorigin="anonymous"></script>
+
+    <title>Admin Panel</title>
+</head>
+<body>
+
+<header class="admin-template-header">
+    <img src="{{url_for('static',filename='html_pics/logo.png')}}" alt="">
+    <h1>ADMIN PANEL</h1>
+    <button><a href="{{url_for('logout')}}">Logout</a></button>
+</header>
+
+
+<section class="admin-sidebar-section">
+    <div class="admin-sidebar-body-container">
+
+        <div class="admin-sidebar-tabs-option">
+            <div class="sidebar-header">
+                <i class="fas fa-tachometer-alt"></i>
+                <h5>Dashboard</h5>
+            </div>
+            <div class="nav flex-column nav-pills admin-sidebar-tabs-wrapper" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active admin-tab-one" id="v-customers-tab" data-toggle="pill" href="#v-customers" role="tab" aria-controls="v-customers" aria-selected="true">View Customers</a>
+                <a class="nav-link admin-tab-two" id="v-products-tab" data-toggle="pill" href="#v-products" role="tab" aria-controls="v-products" aria-selected="false">View Products</a>
+                <a class="nav-link admin-tab-three" id="v-categories-tab" data-toggle="pill" href="#v-categories" role="tab" aria-controls="v-categories" aria-selected="false">View Categories</a>
+                <a class="nav-link admin-tab-four" id="v-orders-tab" data-toggle="pill" href="#v-orders" role="tab" aria-controls="v-orders" aria-selected="false">View Orders</a>
+                <a class="nav-link admin-tab-five" id="v-designs-tab" data-toggle="pill" href="#v-designs" role="tab" aria-controls="v-designs" aria-selected="false">View Designs</a>
+                <a class="nav-link admin-tab-five" id="a-category-tab" data-toggle="pill" href="#a-category" role="tab" aria-controls="a-category" aria-selected="false"> Add Category</a>
+                <a class="nav-link admin-tab-five" id="a-product-tab" data-toggle="pill" href="#a-product" role="tab" aria-controls="a-product" aria-selected="false">Add Product</a>
+<!--                <a class="nav-link admin-tab-five" id="a-design-tab" data-toggle="pill" href="#a-design" role="tab" aria-controls="a-design" aria-selected="false">Add Design</a>-->
+<!--                <a class="nav-link admin-tab-five" id="a-design-img-tab" data-toggle="pill" href="#a-design-img" role="tab" aria-controls="a-design-img" aria-selected="false">Add Design Image</a>-->
+            </div>
+
+        </div>
+
+        <div class="admin-sidebar-tabs-content">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active tab-one-content" id="v-customers" role="tabpanel" aria-labelledby="v-customers-tab">
+                    <div class="view-customers-wrapper table-responsive">
+                        <span class="view-customers">
+                           <h2>View Customers</h2>
+                        </span>
+                        <table class="view-customers-table table table-striped table-hover table-light">
+                            <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Password</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Zipcode</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Cr. Card Name</th>
+                                <th scope="col">Cr. Card #</th>
+                                <th scope="col">Cr. Card Exp</th>
+
+
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {%for cust in customers.query.all()%}
+                                <tr>
+
+                                     <th scope="row">{{cust.first_name}} {{cust.last_name}}</th>
+                                    <td contenteditable="false">{{cust.email}}</td>
+                                    <td contenteditable="false">{{cust.password}}</td>
+                                    <td contenteditable="false">{{cust.address}}</td>
+                                    <td contenteditable="false">{{cust.zip_code}}</td>
+                                    <td contenteditable="false">{{cust.phone}}</td>
+                                    <td contenteditable="false">{{cust.credit_card_name}}</td>
+                                    <td contenteditable="false">{{cust.credit_card_num}}</td>
+                                    <td contenteditable="false">{{cust.credit_card_exp}}</td>
+
+                                </tr>
+                            {%endfor%}
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+                <div class="tab-pane fade admin-tab-two-content" id="v-products" role="tabpanel" aria-labelledby="v-products-tab">
+                    <div class="view-products-wrapper table-responsive">
+                        <span class="view-products">
+                           <h2>View Products</h2>
+                        </span>
+                        <table class="view-products-table table table-striped table-hover table-light">
+                            <thead>
+                            <tr>
+                                <th scope="col">Pr. Name</th>
+                                <th scope="col">Gender</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Popular</th>
+                                <th scope="col">Pictures</th>
+                                <th scope="col">Categories</th>
+                                <th scope="col">Orders</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+
+                            </tr>
+                            </thead>
+                            <tbody class="product-view-table">
+
+                            {%for prod in products.query.all()%}
+
+                                    <tr>
+
+                                        <td scope="row" class="prod_name_edit_{{prod.id}} editable">{{prod.name}}</td>
+                                        <td contenteditable="false">{%for prodcat in prod.categories%}
+                                                {% if categories.query.get(prodcat.category_id).gender!='uni'%}
+                                                    {{categories.query.get(prodcat.category_id).gender}}
+                                                {%endif%}
+                                            {%endfor%}
+                                        </td>
+                                        <td contenteditable="false" class="prod_description_edit_{{prod.id}} editable">{{prod.description}}</td>
+                                        <td contenteditable="false" class="prod_price_edit_{{prod.id}} editable">PKR {{prod.price}}</td>
+                                        {%if prod.name=='Design'%}
+                                        <td contenteditable="false"><img src="{{url_for('static',filename='data2/'+prod.main_image)}}" alt="" style="height: 100px;width: 100px"></td>
+                                        {%else%}
+                                        <td contenteditable="false"><img src="{{url_for('static',filename='html_pics/'+prod.main_image)}}" alt="" style="height: 100px;width: 100px"></td>
+                                        {%endif%}
+                                        <td contenteditable="false" class="prod_popular_edit_{{prod.id}} editable"><span class="badge badge-dark">{{prod.popular}}</span></td>
+                                        <td contenteditable="false">pictures</td>
+                                        <td contenteditable="false">{%for prodcat in prod.categories%}
+                                                {{categories.query.get(prodcat.category_id).name}},
+                                            {%endfor%}
+                                        </td>
+                                        <td contenteditable="false">{{prod.orders|length}}</td>
+
+                                        <td contenteditable="false"><button type="button" class="view-products-btn btn btn-primary" id="{{prod.id}}">Edit</button></td>
+                                        <td contenteditable="false"><button type="button" class="view-products-del-btn btn btn-danger" id="{{prod.id}}">Delete</button></td>
+                                    </tr>
+
+                            {%endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade admin-tab-three-content" id="v-categories" role="tabpanel" aria-labelledby="v-categories-tab">
+                    <div class="view-categories-wrapper table-responsive">
+                        <span class="view-categories">
+                           <h2>View Categories</h2>
+                        </span>
+                        <table class="view-categories-table table table-striped table-hover table-light">
+                            <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Gender</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Images</th>
+                                <th scope="col">Sizes</th>
+                                <th scope="col">Products</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody class="category-view-table">
+                            {%for cat in categories.query.all()%}
+                                <tr>
+
+                                    <td scope="row" class="cat_name_edit editable">{{cat.name}}</td>
+                                    <td contenteditable="false" class="cat_gender_edit editable">{{cat.gender}}</td>
+                                    <td contenteditable="false" class="cat_description_edit editable">{{cat.description}}</td>
+                                    <td contenteditable="false"><img src="{{url_for('static',filename='html_pics/'+cat.pic)}}" alt="" style="height: 100px;width: 100px"></td>
+                                    <td contenteditable="false">{{cat.sizes|map(attribute='size')|join(', ')}}</td>
+                                    <td contenteditable="false">{{cat.products|length}}</td>
+
+                                    <td><button type="button" class="view-categories-btn btn btn-primary" id="{{cat.id}}">Edit</button></td>
+                                    <td><button type="button" class="view-categories-del-btn btn btn-danger" id="{{cat.id}}">Delete</button></td>
+                                </tr>
+                            {%endfor%}
+
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+
+
+
+
+                </div>
+                <div class="tab-pane fade admin-tab-four-content" id="v-orders" role="tabpanel" aria-labelledby="v-orders-tab">
+                    <div class="view-orders-wrapper table-responsive">
+                        <span class="view-orders">
+                           <h2>View Orders</h2>
+                        </span>
+                        <table class="view-orders-table table table-striped table-hover table-light">
+                            <thead>
+                            <tr>
+                                <th scope="col">OrderID</th>
+                                <th scope="col">CustomerID</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Products</th>
+                                <th scope="col">Total Price</th>
+                                <th scope="col">Address-1</th>
+                                <th scope="col">Address-2</th>
+                                <th scope="col">Phone-1</th>
+                                <th scope="col">Phone-2</th>
+                                <th scope="col">Cr. Card Name</th>
+                                <th scope="col">Cr. Card #</th>
+                                <th scope="col">Cr. Card Exp</th>
+                                <th scope="col">Edit</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {%for order in orders.query.all()%}
+                                <tr>
+                                    <th scope="row">{{order.id}}</th>
+                                    <td contenteditable="false">{{order.customer_id}}</td>
+                                    <td contenteditable="false">{{order.date}}</td>
+                                    <td contenteditable="false" class="editable"><span class="badge badge-success">{{order.status}}</span></td>
+                                    <td contenteditable="false">{%for prod in order.items%}
+                                            {%if products.query.get(prod.product_id).name=='Design'%}
+                                                <img src="{{url_for('static',filename='data2/'+products.query.get(prod.product_id).main_image)}}" alt="" style="height: 100px;width: 100px"><br>{{products.query.get(prod.product_id).name}}<br>
+                                            {%else%}
+                                                <img src="{{url_for('static',filename='html_pics/'+products.query.get(prod.product_id).main_image)}}" alt="" style="height: 100px;width: 100px"><br>{{products.query.get(prod.product_id).name}}<br>
+                                            {%endif%}
+                                        {%endfor%}
+                                    </td>
+                                    <td contenteditable="false">PKR {{order.total_price}}</td>
+                                    <td contenteditable="false">{{order.address_first}}</td>
+                                    <td contenteditable="false">{{order.address_second}}</td>
+                                    <td contenteditable="false">{{order.phone_first}}</td>
+                                    <td contenteditable="false">{{order.phone_second}}</td>
+                                    <td contenteditable="false">{{order.credit_card_name}}</td>
+                                    <td contenteditable="false">{{order.credit_card_num}}</td>
+                                    <td contenteditable="false">{{order.credit_card_exp}}</td>
+
+                                    <td><button type="button" class="view-orders-btn btn btn-primary" id="{{order.id}}">Edit</button></td>
+                                </tr>
+                            {%endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="tab-pane fade admin-tab-five-content" id="v-designs" role="tabpanel" aria-labelledby="v-designs-tab">
+                    <div class="view-designs-wrapper table-responsive">
+                        <span class="view-designs">
+                           <h2>View Designs</h2>
+                        </span>
+                        <table class="view-designs-table table table-striped table-hover table-light">
+                            <thead>
+                            <tr>
+                                <th scope="col">DesignID</th>
+                                <th scope="col">Design Code</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Image</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {%for design in design_images.query.all()%}
+                                <tr>
+
+                                    <th scope="row">{{design.id}}</th>
+                                    <td contenteditable="false">{{design.code}}</td>
+                                    <td contenteditable="false">{{design.name}}</td>
+                                    <td contenteditable="false"><img src="{{url_for('static',filename='data2/'+design.image)}}" alt="" style="height: 100px;width: 100px"></td>
+                                </tr>
+                            {%endfor%}
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="tab-pane fade admin-tab-five-content" id="a-category" role="tabpanel" aria-labelledby="a-category-tab">
+                    <div class="add-category-wrapper">
+
+                    <span class="add-cat">
+                       <h2>Add Category</h2>
+                    </span>
+
+                        <form action="{{url_for('addcategory')}}" method="POST" id="add_category_form" enctype = 'multipart/form-data'>
+                            <div class="add-category-name">
+                                <label for="category_name_input"></label>
+                                <input type="text" placeholder="Category Name" name="category-name" id="category_name_input" required>
+                            </div>
+                            <div class="add-category-gender">
+                                <label for="category_gender_input"></label>
+                                <input type="text" placeholder="Gender" name="category-gender" id="category_gender_input" required>
+                            </div>
+
+                            <div class="add-category-description">
+                                <label for="category_description_input"></label>
+                                <input type="text" placeholder="Description" name="category-description" id="category_description_input" required>
+
+
+                            </div>
+
+                            <div class="add-category-sizes">
+                                <label for="add-cat-sizes-select">Add Size</label>
+                                <select name="options-selected" class="add-cat-sizes-multi-select" id="add-cat-sizes-select" multiple>
+                                    <option value="XS">XS</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                    <option value="28">28</option>
+                                    <option value="30">30</option>
+                                    <option value="32">32</option>
+                                    <option value="34">34</option>
+                                    <option value="36">36</option>
+                                    <option value="38">38</option>
+                                    <option value="40">40</option>
+                                </select>
+
+                            </div>
+
+                            <div class="add-category-image">
+<!--                                <form>-->
+                                    <div class="add-cat-img-innner-wrapper form-group">
+                                        <label for="add-category-image-btn">Upload Category Image</label>
+                                        <input name="image-category" type="file" class="form-control-file" id="add-category-image-btn" class="add-category-image-btn">
+                                    </div>
+<!--                                </form>-->
+                            </div>
+
+
+                            <div class="submit">
+                                <input name="submitbuttoncategory" type="submit" value="add" id="add-category-submit-btn" class="add-category-submit-btn"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade admin-tab-five-content" id="a-product" role="tabpanel" aria-labelledby="a-product-tab">
+
+                    <div class="add-product-wrapper">
+
+                    <span class="add-prod">
+                       <h2>Add Product</h2>
+                    </span>
+
+                        <form action="{{url_for('addproduct')}}" method="POST" id="add_product_form" enctype ='multipart/form-data'>
+                            <div class="add-product-name">
+                                <label for="product_name_input"></label>
+                                <input type="text" placeholder="Product Name" name="product-name" id="product_name_input" required>
+                            </div>
+                            <div class="add-product-price">
+                                <label for="product_price_input"></label>
+                                <input type="text" placeholder="Product Price" name="product-price" id="product_price_input" required>
+                            </div>
+
+                            <div class="add-product-popular">
+                                <label for="add-product-pop-select">Select Popular</label>
+                                <select name="product-popular" class="add-product-pop-select" id="add-product-pop-select">
+                                    <option value="true">True</option>
+                                    <option value="false">False</option>
+                                </select>
+
+                            </div>
+
+                            <div class="add-product-description">
+                                <label for="product_description_input"></label>
+                                <input name="product-description" type="text" placeholder="Description" name="product-description" id="product_description_input" required>
+                            </div>
+
+                            <div class="add-product-category">
+                                <label for="add-product-category-select">Select Category</label>
+                                <select name="product-category" class="add-product-cat-select" multiple id="add-product-category-select">
+                                    {%for cat in categories.query.all()%}
+                                        <option value="{{cat.id}}">{{cat.name}}-({{cat.gender}})</option>
+                                    {%endfor%}
+                                </select>
+
+                            </div>
+
+                            <div class="add-product-image">
+<!--                                <form>-->
+                                    <div class="add-prod-img-innner-wrapper form-group">
+                                        <label for="add-product-image-btn">Upload Product Main Image</label>
+                                        <input name="product-main-image" type="file" class="form-control-file" id="add-product-image-btn">
+                                    </div>
+<!--                                </form>-->
+                            </div>
+
+                            <div class="add-product-pictures">
+<!--                                <form>-->
+                                    <div class="add-prod-pic-innner-wrapper form-group">
+                                        <label for="add-product-pic-btn">Upload Product Pictures</label>
+                                        <input name="product-images" type="file" class="form-control-file" id="add-product-pic-btn">
+                                    </div>
+<!--                                </form>-->
+
+                                <div class="add-prod-pic-btn">
+                                    <i class="fas fa-plus fa-2x"></i>
+                                </div>
+                            </div>
+
+
+                            <div class="submit">
+                                <input name="product-submit" type="submit" value="add" id="add-product-submit-btn" class="add-product-submit-btn" />
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+<!--                <div class="tab-pane fade admin-tab-five-content" id="a-design" role="tabpanel" aria-labelledby="a-design-tab">-->
+<!--                    <div class="add-design-wrapper">-->
+
+<!--                    <span class="add-des">-->
+<!--                       <h2>Add Design</h2>-->
+<!--                    </span>-->
+
+<!--                        <form action="#" method="post" id="add_design_form">-->
+<!--                            <div class="add-design-name">-->
+<!--                                <label for="design_name_input"></label>-->
+<!--                                <input type="text" placeholder="design name" name="design-name" id="design_name_input" required>-->
+<!--                            </div>-->
+<!--                            <div class="add-design-code">-->
+<!--                                <label for="design_code_input"></label>-->
+<!--                                <input type="text" placeholder="Design code" name="design-code" id="design_code_input" required>-->
+<!--                            </div>-->
+
+
+<!--                            <div class="add-design-types">-->
+<!--                                <label for="add-des-types-select">Add Design Type</label>-->
+<!--                                <select class="add-des-types-multi-select" id="add-des-types-select">-->
+<!--                                    <option value="">Silhoutte</option>-->
+<!--                                    <option value="">Sleeve</option>-->
+<!--                                    <option value="">Naked</option>-->
+<!--                                    <option value="">Underwear</option>-->
+<!--                                    <option value="">5</option>-->
+<!--                                </select>-->
+
+<!--                            </div>-->
+
+<!--                            <div class="add-design-image">-->
+<!--                                    <div class="add-des-img-innner-wrapper form-group">-->
+<!--                                        <label for="add-design-image-btn">Upload Category Image</label>-->
+<!--                                        <input type="file" class="form-control-file" id="add-design-image-btn">-->
+<!--                                    </div>-->
+<!--                            </div>-->
+<!--                            <div class="submit">-->
+<!--                                <input type="submit" value="add" id="add-design-submit-btn" />-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="tab-pane fade admin-tab-five-content" id="a-design-img" role="tabpanel" aria-labelledby="a-design-img-tab">-->
+<!--                    <div class="add-design-image-wrapper">-->
+
+<!--                    <span class="add-design-img">-->
+<!--                       <h2>Add Design Image</h2>-->
+<!--                    </span>-->
+
+<!--                        <form action="#" method="post" id="add_design_image_form">-->
+<!--                            <div class="add-design-image-name">-->
+<!--                                <label for="design-image_name_input"></label>-->
+<!--                                <input type="text" placeholder="Category Name" name="design-image-name" id="design-image_name_input" required>-->
+<!--                            </div>-->
+
+<!--                            <div class="add-design-image-code">-->
+<!--                                <label for="design_image_code_input"></label>-->
+<!--                                <input type="text" placeholder="Design code" name="design-image-code" id="design_image_code_input" required>-->
+<!--                            </div>-->
+
+<!--                            <div class="add-design-image-image">-->
+<!--                                <form>-->
+<!--                                    <div class="add-design-image-img-innner-wrapper form-group">-->
+<!--                                        <label for="add-design-image-image-btn">Upload Design Image</label>-->
+<!--                                        <input type="file" class="form-control-file" id="add-design-image-image-btn">-->
+<!--                                    </div>-->
+<!--                                </form>-->
+<!--                            </div>-->
+
+
+<!--                            <div class="submit">-->
+<!--                                <input type="submit" value="add" id="add-design-image-submit-btn" />-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
+
+
+
+<!--                </div>-->
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.6.0/umd/popper.min.js" integrity="sha512-BmM0/BQlqh02wuK5Gz9yrbe7VyIVwOzD1o40yi1IsTjriX/NGF37NyXHfmFzIlMmoSIBXgqDiG1VNU6kB5dBbA==" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js" integrity="sha512-IQLehpLoVS4fNzl7IfH8Iowfm5+RiMGtHykgZJl9AWMgqx0AmJ6cRWcB+GaGVtIsnC4voMfm8f2vwtY+6oPjpQ==" crossorigin="anonymous"></script>
+<script src="{{url_for('static',filename='scripts/tail.select.min.js')}}"></script>
+<script>
+    $(document).ready(function () {
+        $('.view-customer-btn').click(function () {
+            var customer_currentTD = $(this).parents('tr').find('td');
+            if ($(this).html() == 'Edit') {
+                $.each(customer_currentTD, function () {
+                    $(this).prop('contenteditable', true);
+                    $(this).css({"border": "1px solid black", "outline": "none", "transform": "scale(1.02)"});
+                });
+            } else {
+                $.each(customer_currentTD, function () {
+                    $(this).prop('contenteditable', false);
+                    $(this).css({"border": "none", "outline": "none", "transform": "scale(1.02)"});
+
+                });
+            }
+
+            $(this).html($(this).html() == 'Edit' ? 'Save' : 'Edit')
+
+        });
+
+        $('.view-products-btn').click(function () {
+            var color = '';
+            var product_currentTD = $(this).parents('tr').find('td');
+            if ($(this).html() == 'Edit') {
+                $.each(product_currentTD, function () {
+                    if($(this).hasClass('editable')){
+                        color = $(this).css("background-color");
+                        $(this).prop('contenteditable', true);
+                        $(this).css({"border": "2px solid black", "background-color":"white"});
+                    };
+                });
+            } else {
+
+                var values = [$(this).attr('id')];
+                $.each(product_currentTD, function () {
+                    if($(this).hasClass('editable')){
+                        values.push($(this).text());
+                        $(this).prop('contenteditable', false);
+                        $(this).css({"border": "none", "background-color":color});
+                    };
+                });
+
+                $.ajax({
+                type: 'POST',
+                url: '/editproduct',
+                data: {'data':values},
+                success: function(data){
+                        console.log(data);
+                    }
+                 });
+
+            }
+
+            $(this).html($(this).html() == 'Edit' ? 'Save' : 'Edit')
+
+        });
+        $('.product-view-table').on('click','button.view-products-del-btn',function (e) {
+            e.preventDefault();
+            $(this).parents('tr').remove();
+            var prod_id = $(this).attr('id');
+            $.ajax({
+                type: 'POST',
+                url: '/deleteproduct',
+                data: {'data':prod_id},
+                success: function(data){
+                        console.log(data);
+                    }
+                 });
+
+        });
+
+
+        $('.view-orders-btn').click(function () {
+            var color = '';
+            var order_currentTD = $(this).parents('tr').find('td');
+            if ($(this).html() == 'Edit') {
+                $.each(order_currentTD, function () {
+                    if($(this).hasClass('editable')){
+                        color = $(this).css("background-color");
+                        $(this).prop('contenteditable', true);
+                        $(this).css({"border": "2px solid black", "background-color":"white"});
+                    };
+                });
+            } else {
+                var values = [$(this).attr('id')];
+                $.each(order_currentTD, function () {
+                    if($(this).hasClass('editable')){
+                        values.push($(this).text());
+                        $(this).prop('contenteditable', false);
+                        $(this).css({"border": "none", "background-color":color});
+                     };
+                });
+               $.ajax({
+                type: 'POST',
+                url: '/editorder',
+                data: {'data':values},
+                success: function(data){
+                        console.log(data);
+                    }
+                 });
+            }
+
+            $(this).html($(this).html() == 'Edit' ? 'Save' : 'Edit')
+
+        });
+
+        $('.view-categories-btn').click(function () {
+            var color = '';
+            var categories_currentTD = $(this).parents('tr').find('td');
+            if ($(this).html() == 'Edit') {
+                $.each(categories_currentTD, function () {
+                    if($(this).hasClass('editable')){
+                        color = $(this).css("background-color");
+                        $(this).prop('contenteditable', true);
+                        $(this).css({"border": "2px solid black", "background-color":"white"});
+                    };
+                });
+            } else {
+                var values = [$(this).attr('id')];
+                $.each(categories_currentTD, function () {
+                    if($(this).hasClass('editable')){
+                        values.push($(this).text());
+                        $(this).prop('contenteditable', false);
+                        $(this).css({"border": "none", "background-color":color});
+                     };
+                });
+
+                $.ajax({
+                type: 'POST',
+                url: '/editcategory',
+                data: {'data':values},
+                success: function(data){
+                        console.log(data);
+                    }
+                 });
+
+            }
+
+            $(this).html($(this).html() == 'Edit' ? 'Save' : 'Edit')
+
+        });
+
+        $('.category-view-table').on('click','button.view-categories-del-btn',function (e) {
+            e.preventDefault();
+            $(this).parents('tr').remove();
+            var prod_id = $(this).attr('id');
+            $.ajax({
+                type: 'POST',
+                url: '/deletecategory',
+                data: {'data':prod_id},
+                success: function(data){
+                        console.log(data);
+                    }
+                 });
+
+        });
+
+
+
+        $('.view-designs-btn').click(function () {
+            var designcurrentTD = $(this).parents('tr').find('td');
+            if ($(this).html() == 'Edit') {
+                $.each(designcurrentTD, function () {
+                    $(this).prop('contenteditable', true)
+                });
+            } else {
+                $.each(designcurrentTD, function () {
+                    $(this).prop('contenteditable', false)
+                });
+            }
+
+            $(this).html($(this).html() == 'Edit' ? 'Save' : 'Edit')
+
+        });
+
+
+
+        $(".add-prod-pic-btn").click(function () {
+           let lastElement = $(".add-prod-pic-innner-wrapper").find("#add-product-pic-btn").last();
+
+           let newElement = lastElement.clone();
+           newElement.css('margin', '1em 0');
+           lastElement.after(newElement);
+        });
+
+
+
+        // $('.add-category-submit-btn').click(function (e) {
+        //    e.preventDefault();
+        //
+        //    var category_name_input =  $('#category_name_input').val();
+        //    var category_gender_input =  $('#category_gender_input').val();
+        //    var category_description_input =  $('#category_description_input').val();
+        //    var add_cat_sizes_select =  $('#add-cat-sizes-select').val();
+        //    var add_category_image_btn =  $('#add-category-image-btn').val();
+        //    if (category_name_input!='' && category_gender_input!='' && category_description_input!='' && add_cat_sizes_select!='' && add_category_image_btn!=''){
+        //         console.log(category_name_input,category_gender_input,category_description_input,add_cat_sizes_select,add_category_image_btn);
+        //         $('#category_name_input').val('');
+        //         $('#category_gender_input').val('');
+        //         $('#category_description_input').val('');
+        //         $('#add-cat-sizes-select').val('');
+        //         $('#add-category-image-btn').val('');
+        //         var data = {"name":category_name_input,
+        //             "gender":category_gender_input,
+        //             "description":category_description_input,
+        //             "sizes":add_cat_sizes_select,
+        //             "image":add_category_image_btn};
+        //
+        //         $.ajax({
+        //         type: 'POST',
+        //         url: '/addcategory',
+        //         data: data,
+        //         success: function(data){
+        //                 console.log(data);
+        //
+        //                 alert("Congratulations, category has been added!")
+        //             }
+        //
+        //          });
+        //
+        //
+        //     }
+        //
+        // });
+
+
+
+
+
+        // $('.add-product-submit-btn').click(function (e) {
+        //     e.preventDefault();
+        //
+        //     var product_name_input = $('#product_name_input').val();
+        //     var product_price_input = $('#product_price_input').val();
+        //     var add_product_pop_select = $('#add-product-pop-select').val();
+        //     var product_description_input = $('#product_description_input').val();
+        //     var add_product_category_select = $('#add-product-category-select').val();
+        //     var add_product_image_btn = $('#add-product-image-btn').val();
+        //     var pictures = $('.add-prod-pic-innner-wrapper').children().slice(1);
+        //     var pictures_names = [];
+        //
+        //     var arrayLength = pictures.length;
+        //     for (var i = 0; i < arrayLength; i++) {
+        //
+        //         pictures_names.push($(pictures[i]).val());
+        //     }
+        //
+        //
+        //     if (product_name_input!='' && product_price_input!='' && add_product_pop_select!='' && product_description_input!='' && add_product_category_select!='' && pictures_names!=[] && add_product_image_btn!=[]){
+        //
+        //         console.log(product_name_input,product_price_input,add_product_pop_select,product_description_input,add_product_category_select,pictures_names,add_product_image_btn);
+        //
+        //         $('#product_name_input').val('');
+        //         $('#product_price_input').val('');
+        //         $('#add-product-pop-select').val('');
+        //         $('#product_description_input').val('');
+        //         $('#add-product-category-select').val('');
+        //
+        //         var data = {"name":product_name_input,
+        //             "price":product_price_input,
+        //             "popular":add_product_pop_select,
+        //             "description":product_description_input,
+        //             "categories":add_product_category_select,
+        //             "pictures":pictures_names,
+        //             "image":add_product_image_btn};
+        //         $.ajax({
+        //         type: 'POST',
+        //         url: '/addproduct',
+        //         data: data,
+        //         success: function(data){
+        //                 console.log(data);
+        //                 alert("Congratulations, product has been added!")
+        //             }
+        //
+        //          });
+        //
+        //
+        //
+        //
+        //     }
+        // })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+});
+tail.select(".add-product-pop-select", {
+    hideSelected: true,
+    hideDisabled: true,
+    multiShowCount: true,
+    multiContainer: true,
+    deselect: true,
+});
+
+tail.select(".add-cat-sizes-multi-select" ,{
+    hideSelected: true,
+    hideDisabled: true,
+    multiShowCount: true,
+    multiContainer: true,
+    deselect: true,
+});
+
+tail.select(".add-product-cat-select",{
+    hideSelected: true,
+    hideDisabled: true,
+    multiShowCount: true,
+    multiContainer: true,
+    deselect: true,
+});
+
+tail.select(".add-des-types-multi-select",{
+    hideSelected: true,
+    hideDisabled: true,
+    multiShowCount: true,
+    multiContainer: true,
+    deselect: true,
+});
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+//const tl = gsap.timeline({ defaults: { ease: "ease-in-out" } });
+//const tl = gsap.timeline({defaults: { ease: "ease-in-out" } });
+//tl.to(".text", { y: "0%", duration: 1, stagger: 0.25 });
+//tl.to(".slider", { y: "-100%", duration: 1, delay: 0.25 });
+//tl.to(".text",{ opacity: 0, duration: 1, stagger: 0.25}), "-=0.5";
+//tl.to(".intro", { y: "100%" , duration: 1});
+//// tl.fromTo("nav", { opacity: 0 }, { opacity: 1, duration: 1 });
+//// tl.fromTo(".big-text", { opacity: 0 }, { opacity: 1, duration: 1 }, "-=1");
+//tl.fromTo(".main-header-left",{ x: "-100%" } ,{ x: "0%", duration: 1}, "-=1");
+//tl.fromTo(".main-header-right",{ x: "100%"} ,{ x: "0%", duration: 1}, "-=1");
+//tl.fromTo(".main-header-center",{ opacity: 0 } ,{ opacity: 1, duration: 1}, "-=1");

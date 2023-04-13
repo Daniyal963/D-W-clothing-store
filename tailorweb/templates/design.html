@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>D & W : Design</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='design.css')}}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@500;700&family=Lobster&display=swap" rel="stylesheet"/>
+    <script src="{{url_for('static',filename='scripts/wow.min.js')}}"></script>
+    <script src="{{url_for('static',filename='scripts/scripts.js')}}"></script>
+    <script>
+        new WOW().init();
+    </script>
+</head>
+<body>
+    <div class="main-nav-container" id="main-nav-container">
+        <nav class="nav-bar">
+            <ul class="main-nav" style="margin: 0;">
+                <li><a href="{{url_for('home')}}">Home</a></li>
+                <li><a href="{{url_for('design')}}">Design</a></li>
+                <li><a href="{{url_for('productview',product_type='men')}}">Men</a></li>
+                <li><a href="{{url_for('productview',product_type='women')}}">Women</a></li>
+                <li><a href="{{url_for('productview',product_type='popular')}}">Popular</a></li>
+                <li><a href="{{url_for('productview',product_type='winter')}}">WINTER COLLECTION</a></li>
+                {%if current_user.is_authenticated%}
+                    {% if current_user.role == 'CUSTOMER' %}
+                        <li><a href="{{url_for('account')}}">Account</a></li>
+                        <li><a href="{{url_for('logout')}}">Logout</a></li>
+                    {%endif%}
+                {%endif%}
+            </ul>
+
+              <div class="dropdown">
+              <button class="dropbtn"><a href="{{url_for('cart')}}"><i class="fa fa-shopping-cart" style="color: #333;"></i></a><span class="badge" style="color: #333;">{{session['shoppingcart']|length}}</span></button>
+              {%if not current_user.is_authenticated%}
+
+                      <div class="dropdown-content">
+                        <a href="{{url_for('loginreg')}}">Log In</a>
+                        <a href="{{url_for('loginreg')}}">Register</a>
+                      </div>
+
+              {%endif%}
+            </div>
+        </nav>
+
+    </div>
+
+
+
+
+<div class="design-wrapper">
+    <div class="size-modal-window" id="size-modal-window">
+        <div class="product-size-qty">
+            <strong><small>Size</small></strong>
+            <div class="product-sizes">
+                {%for size in sizes%}
+                    <input type="radio" id="size-{{size.size}}" name="product-sizes" value="{{size.id}}" />
+                    <label for="size-{{size.size}}">{{size.size}}</label>
+                {%endfor%}
+            </div>
+            <span class="product-price"></span>
+
+
+        </div>
+        <div class="size-buttons"><button type="button" class="proceed-order">Proceed To Order</button></div>
+    </div>
+    <div class="design-type-wrapper">
+        <div class="design-type-heading">Choose Dress Type</div>
+        <div class="design-type-options">
+            <div class="design-type-option-box dtype-1">
+
+                <svg viewBox="0 0 26.46 26.46">
+                  <path fill="none" stroke="#433838" stroke-linejoin="round" stroke-width=".14" d="M17.3 1.2c-.5 1.04-.57 3.6-.21 4.84-.12.84-.63 1.74-.64 3.5 0 1.26.92 3.66 1.36 5.48.84 3.5 2.97 9 2.97 9s-1.03.54-1.57.41c-.79-.2-1.46.28-1.47.48-.02.32-2.15.45-2.16.22-.01-.2-1.03-.11-1.03.13 0 .13-.86.21-1.53.2-.67.01-1.58-.06-1.58-.2 0-.23-.99-.32-1-.12-.02.23-2.18.05-2.15-.22.02-.23-.02-.68-1.49-.48-.7.09-1.12-.2-1.12-.2s1.48-4.21 2.53-9.22c.38-1.82 1.32-4.21 1.32-5.48-.01-1.76-.52-2.66-.64-3.5.36-1.23.3-3.8-.22-4.84"></path>
+                  <path fill="none" stroke="#433838" stroke-linejoin="round" stroke-width=".14" d="M8.27 24.23l.2-1.21.45-2.67a142.02 142.02 0 0 0 .62-3.9l-.17 1.23a140.45 140.45 0 0 1-1.1 6.55zm2.16.89l.02-.44.01-.52.01-.67v-.8l-.01-.88-.02-.95c-.01-.32-.03-.65-.03-.98l-.06-1.92-.04-1.68v-1.2l.01-.44v1.64l.05 1.68.07 1.92.02.98.02.95.01.89v.79l-.01.67c0 .2 0 .37-.02.52l-.03.44zm1.01-.34l.03-.56c0-.17.02-.4.04-.64l.07-.82.12-.98.13-1.1.29-2.36.07-.6.07-.6.12-1.17.09-1.1c.02-.35.05-.67.05-.98l.03-.83v-.64l-.02-.56.02.56v.65l-.01.83-.06.98c-.02.35-.06.72-.1 1.1-.03.37-.06.76-.11 1.16l-.06.6-.07.6-.15 1.21-.15 1.16-.13 1.1-.11.98-.09.82-.04.64-.03.55zm2.85.28l-.01-.42-.02-.47c0-.19-.03-.4-.04-.63l-.07-.73-.1-.82c-.06-.57-.15-1.17-.23-1.77l-.2-1.77-.08-.82-.06-.74-.02-.33v-.3l-.01-.47v-.42.42l.01.47.01.3.03.32c0 .24.03.48.05.74l.09.82.21 1.77.23 1.77.09.82.06.74c.01.23.04.43.04.62v.47l.02.43zm1.01-.16v-.45l-.05-1.16-.07-1.64-.1-1.89a290.7 290.7 0 0 1-.15-3.53l-.03-1.16-.02-.44a5611.27 5611.27 0 0 0 .24 5.13l.09 1.88.06 1.64.03 1.17v.44zm2.35-.67l-.09-.46c-.05-.3-.14-.7-.25-1.2-.1-.5-.24-1.08-.38-1.7l-.44-1.93a62.15 62.15 0 0 1-.4-1.95l-.15-.9c-.05-.29-.1-.56-.13-.82l-.09-.68a13 13 0 0 1-.06-.53l-.05-.47.06.47c0 .14.04.33.07.53a7 7 0 0 0 .1.68c.04.26.07.53.13.82l.16.9c.05.31.12.64.19.96l.2.99.44 1.94.37 1.7.14.68.1.52c.06.28.08.45.08.45zM9.53 9.54h6.92M8.64 1.2L9.9.7v.04c-.2 2.52 1.55 4.14 3.1 4.14h.05c1.54 0 3.21-1.62 3.03-4.14V.71l1.26.49"></path>
+                  <path fill="none" stroke="#433838" stroke-linejoin="round" stroke-width=".14" d="M18.29 2.48a5.51 5.51 0 0 0-1.44 2.16 9.9 9.9 0 0 1 .42-3.47c.67-.36.88.66 1.02 1.3zM7.66 2.5a5.51 5.51 0 0 1 1.45 2.17 9.9 9.9 0 0 0-.42-3.47c-1.03-.35-1.03.7-1.03 1.3z"></path>
+                  <path fill="none" stroke="#433838" stroke-linejoin="round" stroke-width=".14" d="M8.28 1.54v-.01l.03-.05a.33.33 0 0 1 .12-.1.21.21 0 0 1 .1-.04l.12-.03h.07l.02.02s.02.01.02.03l-.02.05a.31.31 0 0 1-.11.08.91.91 0 0 1-.12.06l-.12.04a.98.98 0 0 1-.22.05l-.21.04.2-.06.22-.07.12-.05.1-.06c.04-.02.09-.04.1-.07h.01l-.06-.01a.62.62 0 0 0-.2.05.39.39 0 0 0-.14.09l-.03.04zm.07.86v-.17l.01-.08.02-.1c.01-.02.03-.05.03-.08l.04-.1a1 1 0 0 1 .18-.23l.06-.06.1-.07.04-.02-.12.11a1.23 1.23 0 0 0-.2.29l-.04.08-.04.09-.02.08-.03.08v.06l-.02.05-.01.07zm9.27-.83s0-.02-.03-.05a.4.4 0 0 0-.11-.1.5.5 0 0 0-.2-.06h-.04v.01c0 .03.04.06.08.08.03.03.07.04.1.06l.1.05.2.08.2.07s-.08 0-.2-.04a.88.88 0 0 1-.2-.07l-.12-.05-.11-.06c-.04-.03-.07-.05-.1-.1v-.05c0-.02.02-.02.04-.03h.07c.08.01.14.05.2.08.06.04.08.09.1.11l.02.05v.02zm-.06.94v-.05l-.03-.12-.01-.09-.02-.09-.03-.09-.03-.1-.05-.09-.04-.08-.1-.15-.09-.1-.03-.03s.06.03.14.11c.03.04.08.08.11.14l.05.1.04.09.04.1.02.1.03.18v.16zM9.9.74s3.22 3.2 6.18 0m-5.05 7.28l.14 1.53m3.85-1.53l-.14 1.53M9.04 6.66l1.78-.22m6.1.22l-1.79-.22"></path>
+                </svg>
+                <div class="design-type-title">Dress</div>
+                <div class="design-type-button-wrapper">
+                    <button type="button" id="choose-design-type">Choose</button>
+                </div>
+            </div>
+            <div class="design-type-option-box dtype-2">
+                <svg viewBox="0 0 26.46 26.46">
+                  <path fill="none" stroke="#433838" stroke-linejoin="round" stroke-width=".22" d="M6.01 24.26c.6-2.85 2.06-6.57 2.06-8.55-.01-2.74-.81-4.15-1-5.46.57-1.92.46-5.93-.33-7.55m13.46 0c-.78 1.62-.89 5.63-.33 7.55-.19 1.3-.99 2.72-1 5.46 0 1.97 1.43 5.7 2.12 8.54m-14.98.01s8.34 1.96 14.98 0"></path>
+                  <path fill="none" stroke="#433838" stroke-linejoin="round" stroke-width=".22" d="M10.96 1.38c-.12-.04-.25-.06-.37-.09L6.77 2.77m13.53 0l-3.84-1.48a11 11 0 0 1-5.5.09M7.18 5.42v.17c0 .11 0 .28-.03.46-.02.19-.04.42-.08.65l-.1.74-.14.74-.13.65-.1.45-.04.17.1-.63.22-1.39.12-.74.1-.65.06-.46.02-.16zM6.5 4.9l-.17.54-.18.55-.22.62-.23.61c-.08.2-.16.38-.21.54-.12.31-.22.52-.22.52l.18-.53c.05-.17.1-.35.18-.55l.22-.62.23-.61.2-.54.23-.52zm-.64-.04l-.27.33-.29.33-.33.37-.34.37c-.11.12-.22.22-.3.32l-.31.3.27-.34.28-.32.34-.37.34-.38c.1-.12.22-.21.3-.31l.31-.3z"></path>
+                  <path fill="none" stroke="#433838" stroke-linejoin="round" stroke-width=".22" d="M6.46 9.56c-.13.28-2.39-1.22-1.56-1.1.83.12-.61-.6-.61-.6l-1.27-.8C4.45 4.6 6.56 2.26 6.8 2.82c1.31 3.04.34 7.44.34 7.44zm-1.7-1.39v.34M19.83 5.4l.03.18c0 .11.03.28.06.46l.1.65.12.74.22 1.39c.05.38.1.63.1.63l-.05-.17-.1-.45-.13-.65-.13-.74-.1-.74c-.04-.24-.06-.46-.08-.65-.03-.18-.03-.35-.04-.46v-.18zm.68-.5l.22.52c.07.15.13.34.2.53l.24.62.22.62.18.55.18.53s-.1-.2-.22-.52l-.21-.54-.23-.61-.22-.62-.18-.55-.18-.53zm.65-.05l.3.3.3.31.35.37c.1.14.23.26.33.38l.29.32.27.33-.3-.3c-.1-.08-.2-.19-.31-.31l-.34-.37c-.1-.13-.23-.25-.34-.37l-.28-.33-.27-.33z"></path>
+                  <path fill="none" stroke="#433838" stroke-linejoin="round" stroke-width=".22" d="M20.56 9.55c.3.05 2.39-1.22 1.56-1.1-.83.12.6-.6.6-.6l1.28-.8c-1.45-2.47-3.55-4.8-3.8-4.25-1.3 3.03-.33 7.44-.33 7.44zm1.7-1.45l.08.4"></path>
+                  <path fill="none" stroke="#433838" stroke-linejoin="round" stroke-width=".22" d="M6.71 2.73l3.9-1.45s.11 2.61-1.25 4.53c-.68.95 2.87 3.33 4.13 4.54h.02c.76-.98 4.74-3.54 4.13-4.54-1.2-1.9-1.25-4.53-1.25-4.53h-.02.03l3.9 1.45"></path>
+                </svg>
+                <div class="design-type-title">Tops</div>
+                <div class="design-type-button-wrapper">
+                    <button type="button" class="disabled">Coming Soon</button>
+                </div>
+            </div>
+            <div class="design-type-option-box dtype-3">
+                <svg viewBox="-20 90 135 100">
+                    <path d="M69.5904 198.9924C62.9067 200.7779 52.5511 199.7839 51.3296 198.8788L51.3299 198.6158C51.3346 171.4368 51.382 161.2158 51.382 146.0115 51.382 137.0247 49.5544 109.0983 49.4812 106.8406L49.2901 108.5543C48.7876 112.8855 47.1478 137.1828 47.1478 146.1698 47.1478 161.3448 47.1955 171.5557 47.2002 198.6161L47.2005 198.8791C45.9787 199.7842 35.6231 200.7782 28.9394 198.9927 28.9394 198.9927 29.4419 167.703 29.4419 146.1698 29.4419 129.2893 28.0794 110.7615 29.2735 95.9324 30.3878 82.0923 33.4617 78.5547 34.6057 73.5322L64.3738 73.5322C65.5178 78.5547 68.6442 83.3349 69.2563 95.774 69.9873 110.6335 69.0879 129.1309 69.0879 146.0118 69.0879 167.8179 69.5904 198.9924 69.5904 198.9924Z" fill="white" stroke="#433838" data-main="1"></path>
+                    <path d="M49.5992 73.5803L49.4809 106.8406" fill="none" stroke="#433838" data-main="1"></path>
+                    <path d="M57.896 73.5319L58.6965 82.0919" fill="none" stroke="#433838" data-main="1"></path>
+                    <path d="M40.6418 73.7009L39.8416 82.0919" fill="none" stroke="#433838" data-main="1"></path>
+                    <path d="M47.7104 107.5573L52.0218 105.7016" fill="none" stroke="#433838" data-main="1"></path>
+                </svg>
+                <div class="design-type-title">Pants</div>
+                <div class="design-type-button-wrapper">
+                    <button type="button" class="disabled">Coming Soon</button>
+                </div>
+            </div>
+            <div class="design-type-option-box dtype-4">
+                <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" viewBox="-27 -10 153 185">
+                    <path fill="none" stroke="#433838" stroke-miterlimit="10" d="M64.9 11.9l9.9-.1s-.3 8.1 1 11.7c2.9 8 8.8 23 9.7 49 .4 10.3-2.3 22.4-3.1 36.4-.7 11.9-2.9 25.3-4.8 40.3l-59.4-.1c-1.8-14-3.6-26.7-4.4-38-1.1-16.3-3.4-29.9-3-41.2 1-23.9 6.2-37.7 9-45.4 1.3-3.6 1-12.6 1-12.6l9.9.1 34.2-.1z"></path>
+                    <path fill="#fff" stroke="#433838" stroke-width=".48" d="M35.7 12.5s.2 11.4-2 15.4c0 0-3.3 10.1-3.2 15.3 0 0-1.1 21.9-.3 29l4.5 77M61 12.2s-1.2 9.5 1 13.6c0 0 4.3 11.9 4.1 17.1 0 0 1.1 21.9.3 29l-4.5 77M31.5 37.2L13.6 49.6m51.9-12.4L82 48"></path></svg>
+                <div class="design-type-title">Skirts</div>
+                <div class="design-type-button-wrapper">
+                    <button type="button" class="disabled">Coming Soon</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="animate-design">
+        <div class="animate-design-heading" style="color: white">
+            Lets Design!
+        </div>
+    </div>
+    <div class="design-panel">
+    <div class="design-panel-left">
+        <div class="left-panel-heading">
+            Choose Silhouettes
+        </div>
+        <div class="left-panel-designs">
+            {%for design in designs.query.all()%}
+                {%if design.type=='sh'%}
+                    <div id="{{design.id}}" class="left-panel-design-box">
+                        <img src="{{url_for('static',filename='data/'+design.image)}}"/>
+                        <div class="design-svg-heading">{{design.name}}</div>
+                    </div>
+                {%endif%}
+            {%endfor%}
+
+
+        </div>
+    </div>
+    <div class="design-panel-right">
+        <div class="right-panel-heading">
+            Dress Sketch
+        </div>
+        <div class="right-panel-design">
+            <img src="" alt="">
+        </div>
+        <div class="right-panel-buttons">
+            <button type="button" id="prev-button">Previous</button>
+            <button type="button" id="next-button">Next</button>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.6.0/umd/popper.min.js" integrity="sha512-BmM0/BQlqh02wuK5Gz9yrbe7VyIVwOzD1o40yi1IsTjriX/NGF37NyXHfmFzIlMmoSIBXgqDiG1VNU6kB5dBbA==" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js" integrity="sha512-IQLehpLoVS4fNzl7IfH8Iowfm5+RiMGtHykgZJl9AWMgqx0AmJ6cRWcB+GaGVtIsnC4voMfm8f2vwtY+6oPjpQ==" crossorigin="anonymous"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+<script>
+    window.onscroll = function() {myFunction()};
+
+    var header = document.getElementById("main-nav-container");
+    var sticky = header.offsetTop;
+
+    function myFunction() {
+      if (window.pageYOffset > sticky) {
+        header.classList.add("sticky");
+      } else {
+        header.classList.remove("sticky");
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+
+    var designs = {{designs_js|safe}};
+    var design_image = {{design_image_js|safe}};
+    var sizes = {{sizes_js|safe}};
+    var products = {{products_js|safe}};
+
+    var design_code = '';
+
+
+    var sh_chosen = '';
+    var sl_chosen = '';
+    var n_chosen = '';
+    var b_chosen = '';
+    var col_chosen = '';
+
+var design_count = 1;
+var silhouttes = {};
+var sleeves = {};
+var necklines  = {};
+var back= {};
+var color = {'navyblue':['navy','navyblue'],'black':['black','black'],'red':['red','red'],'fuchsia':['fuchsia','fuchsia'],'purple':['purple','purple'],'bwd':['url(/static/data/blackdots.JPG)','Black White Dots'],'bzz':['url(/static/data/bluezigzag.JPG)','Blue Zig Zag'],'mcl':['url(/static/data/multlines.JPG)','Multi Colored Lines'],'drf':['url(/static/data/redtext.JPG)','Dark Red Flowers'],'sf':['url(/static/data/silverflow.JPG)','Silver Flowers']};
+for (var design in designs) {
+    if (designs.hasOwnProperty(design)) {
+        if (designs[design]['type']==='sh'){silhouttes[designs[design]['id']]=designs[design]}
+        else if(designs[design]['type']==='sL'){sleeves[designs[design]['id']]=designs[design]}
+        else if(designs[design]['type']==='n'){necklines[designs[design]['id']]=designs[design]}
+        else if(designs[design]['type']==='b'){back[designs[design]['id']]=designs[design]}
+    }
+}
+
+
+$(document).ready(function () {
+
+    $('#choose-design-type').click(function () {
+       first();
+    });
+
+    function first(){
+        $('.design-type-wrapper').fadeOut();
+
+       setTimeout(function(){
+       $('.design-type-wrapper').remove();
+       $('.animate-design').fadeIn();
+        $('.animate-design').css('display','flex');
+        $('.animate-design').delay(1000).fadeOut(1000).delay(1000);
+
+        $('.design-panel').delay(3000).fadeIn(1000);
+         }, 500);
+
+        second();
+    };
+    function second(){
+        setTimeout(function(){
+        $('.design-panel').css('display','flex');
+         }, 3001);
+    }
+
+
+    $( '.left-panel-designs' ).on( 'click', 'div.left-panel-design-box',function () {
+        if (design_count===1) {
+            sh_chosen = $(this).attr('id');
+            design_code=designs[sh_chosen]['code'];
+
+
+        } else if(design_count===2){
+            sl_chosen = $(this).attr('id');
+            design_code=designs[sh_chosen]['code']+'_'+sleeves[sl_chosen]['code'].split('_')[1];
+            console.log(design_code);
+        } else if(design_count===3){
+            n_chosen = $(this).attr('id');
+            design_code=designs[sh_chosen]['code']+'_'+sleeves[sl_chosen]['code'].split('_')[1]+'_'+necklines[n_chosen]['code'].split('_')[1];
+            console.log(design_code);
+        } else if(design_count===4){
+            b_chosen = $(this).attr('id');
+            design_code=designs[sh_chosen]['code']+'_'+sleeves[sl_chosen]['code'].split('_')[1]+'_'+necklines[n_chosen]['code'].split('_')[1]+'_'+back[b_chosen]['code'].split('_')[1];
+            console.log(design_code);
+
+        } else if(design_count===5){
+            col_chosen = $(this).attr('id');
+            design_code=designs[sh_chosen]['code']+'_'+sleeves[sl_chosen]['code'].split('_')[1]+'_'+necklines[n_chosen]['code'].split('_')[1]+'_'+back[b_chosen]['code'].split('_')[1]+'_'+col_chosen;
+            console.log(design_code);
+        }
+        console.log(design_code);
+        var text = '<div class="right-panel-design">';
+        text += "<img src='{{url_for('static',filename='data2/b1.svg')}}'/>".replace('b1.svg', design_image[design_code].image);
+
+        text+='</div>';
+        $('.right-panel-design').html('').html(text);
+    });
+
+    $('#next-button').click(function () {
+       if (design_count===1){
+           $('.left-panel-heading').html('Choose Sleeves');
+           var ht = '';
+
+           for (var sleeve in sleeves) {
+                    if (sleeves.hasOwnProperty(sleeve)) {
+                        if (sleeves[sleeve]['code'].includes(designs[sh_chosen]['code'])) {
+                            var text = '<div id="' + sleeves[sleeve]['id'] + '" class="left-panel-design-box">';
+
+
+                            text += "<img src='{{url_for('static',filename='data/b1.svg')}}'/>".replace('b1.svg', sleeves[sleeve].image);
+                            text += '<div class="design-svg-heading">' + sleeves[sleeve].name + '</div></div>';
+                            ht += text;
+                        }
+                    }
+           }
+
+
+            $('.left-panel-designs').html('').html(ht);
+           design_count+=1;
+
+       } else if(design_count===2){
+            $('.left-panel-heading').html('Choose Necklines');
+            var ht = '';
+               for (var neckline in necklines) {
+                    if (necklines.hasOwnProperty(neckline)) {
+                        if (necklines[neckline]['code'].includes(designs[sh_chosen]['code'])) {
+                            var text = '<div id="' + necklines[neckline]['id'] + '" class="left-panel-design-box">';
+
+
+                            text += "<img src='{{url_for('static',filename='data/b1.svg')}}'/>".replace('b1.svg', necklines[neckline].image);
+                            text += '<div class="design-svg-heading">' + necklines[neckline].name + '</div></div>';
+                            ht += text;
+                        }
+                    }
+               }
+
+
+            $('.left-panel-designs').html('').html(ht);
+            design_count+=1;
+       }
+       else if(design_count===3){
+            $('.left-panel-heading').html('Choose Back Closure');
+            var ht = '';
+           for (var b in back) {
+               if (back.hasOwnProperty(b)) {
+                   if (back[b]['code'].includes(designs[sh_chosen]['code'])) {
+                       var text = '<div id="' + back[b]['id'] + '" class="left-panel-design-box">';
+
+
+                       text += "<img src='{{url_for('static',filename='data/b1.svg')}}'/>".replace('b1.svg', back[b].image);
+                       text += '<div class="design-svg-heading">' + back[b].name + '</div></div>';
+                       ht += text;
+                   }
+               }
+           }
+
+
+
+            $('.left-panel-designs').html('').html(ht);
+            design_count+=1;
+       }
+       else if(design_count===4){
+            $('.left-panel-heading').html('Choose Color/Texture');
+            var ht = '';
+           for (var x in color) {
+               if (color.hasOwnProperty(x)) {
+                   var text = '<div id="'+x+'" class="left-panel-design-box" style="width:200px;height: 200px;">' +
+                       '<div class="rounded rounded-circle" style="height:80%;width:80%;background:' + color[x][0] + '">' +
+                       '</div><div class="design-svg-heading">' + color[x][1] + '</div></div>';
+                   ht += text;
+               }
+           }
+
+
+            $('.left-panel-designs').html('').html(ht);
+           design_count+=1;
+       }
+       else if(design_count===5){
+            setTimeout(function(){
+               $('.size-modal-window').fadeIn();
+                $('.size-modal-window').css('display','flex');
+                console.log(design_code);
+                for (var x in products) {
+                       if (products.hasOwnProperty(x)) {
+                           if (products[x].description===design_code){
+
+                            $('.product-price').html('').html('<strong class="prod-id-class" id="'+products[x].id+'">PKR'+products[x].price+'</strong>');
+                           }
+                       }
+                   }
+         }, 500);
+           $('.design-type-wrapper').css('-webkit-filter','blur(5px)');
+           $('.design-type-wrapper').css('-o-filter', 'blur(5px)');
+           $('.design-type-wrapper').css('-ms-filter', 'blur(5px)');
+           $('.design-type-wrapper').css('-filter', 'blur(5px)');
+           $('.animate-design').css('-webkit-filter','blur(5px)');
+           $('.animate-design').css('-o-filter', 'blur(5px)');
+           $('.animate-design').css('-ms-filter', 'blur(5px)');
+           $('.animate-design').css('-filter', 'blur(5px)');
+           $('.design-panel').css('-webkit-filter','blur(5px)');
+           $('.design-panel').css('-o-filter', 'blur(5px)');
+           $('.design-panel').css('-ms-filter', 'blur(5px)');
+           $('.design-panel').css('-filter', 'blur(5px)');
+       }
+    });
+
+
+
+
+
+
+
+
+    $('#prev-button').click(function () {
+       if (design_count===2){
+           $('.left-panel-heading').html('Choose Silhouttes');
+           var ht = '';
+
+           for (var silhoutte in silhouttes) {
+                    if (silhouttes.hasOwnProperty(silhoutte)) {
+                            var text = '<div id="' + silhouttes[silhoutte]['id'] + '" class="left-panel-design-box">';
+
+
+                            text += "<img src='{{url_for('static',filename='data/b1.svg')}}'/>".replace('b1.svg', silhouttes[silhoutte].image);
+                            text += '<div class="design-svg-heading">' + silhouttes[silhoutte].name + '</div></div>';
+                            ht += text;
+
+                    }
+           }
+
+
+            $('.left-panel-designs').html('').html(ht);
+           design_count-=1;
+
+       }
+        else if (design_count===3){
+           $('.left-panel-heading').html('Choose Sleeves');
+           var ht = '';
+
+           for (var sleeve in sleeves) {
+                    if (sleeves.hasOwnProperty(sleeve)) {
+                        if (sleeves[sleeve]['code'].includes(designs[sh_chosen]['code'])) {
+                            var text = '<div id="' + sleeves[sleeve]['id'] + '" class="left-panel-design-box">';
+
+
+                            text += "<img src='{{url_for('static',filename='data/b1.svg')}}'/>".replace('b1.svg', sleeves[sleeve].image);
+                            text += '<div class="design-svg-heading">' + sleeves[sleeve].name + '</div></div>';
+                            ht += text;
+                        }
+                    }
+           }
+
+
+            $('.left-panel-designs').html('').html(ht);
+           design_count-=1;
+
+       } else if(design_count===4){
+            $('.left-panel-heading').html('Choose Necklines');
+            var ht = '';
+               for (var neckline in necklines) {
+                    if (necklines.hasOwnProperty(neckline)) {
+                        if (necklines[neckline]['code'].includes(designs[sh_chosen]['code'])) {
+                            var text = '<div id="' + necklines[neckline]['id'] + '" class="left-panel-design-box">';
+
+
+                            text += "<img src='{{url_for('static',filename='data/b1.svg')}}'/>".replace('b1.svg', necklines[neckline].image);
+                            text += '<div class="design-svg-heading">' + necklines[neckline].name + '</div></div>';
+                            ht += text;
+                        }
+                    }
+               }
+
+
+            $('.left-panel-designs').html('').html(ht);
+            design_count-=1;
+       }
+       else if(design_count===5){
+            $('.left-panel-heading').html('Choose Back Closure');
+            var ht = '';
+           for (var b in back) {
+               if (back.hasOwnProperty(b)) {
+                   if (back[b]['code'].includes(designs[sh_chosen]['code'])) {
+                       var text = '<div id="' + back[b]['id'] + '" class="left-panel-design-box">';
+
+
+                       text += "<img src='{{url_for('static',filename='data/b1.svg')}}'/>".replace('b1.svg', back[b].image);
+                       text += '<div class="design-svg-heading">' + back[b].name + '</div></div>';
+                       ht += text;
+                   }
+               }
+           }
+
+
+
+            $('.left-panel-designs').html('').html(ht);
+            design_count-=1;
+       }
+
+    });
+
+
+
+
+
+
+
+
+
+    $('.proceed-order').click(function (e) {
+       e.preventDefault();
+       var size = $(".product-sizes input[type='radio']:checked").val();
+
+        var prodid = $(".prod-id-class").attr("id");
+
+        if (size && prodid){
+                $.ajax({
+                    type: 'POST',
+                    url: '/addtocart',
+
+                    data: {'size':size,'quantity':1,'prodid':prodid},
+                    success: function(data){
+
+                        window.location =data;
+
+                    }
+
+                });
+        }
+        else{
+            alert('Please Choose Size!');
+        };
+    });
+})
+</script>
+</body>
+</html>
