@@ -1,8 +1,7 @@
 
 # Design And Wear - DnW
 
-This is a web application which has all the features of a normal e commerce clothing store, with an additional functionality of designing a custom dress to be stitched and delivered to the user.
-This web application is built using Python-Flask.
+This is a Python-Flask based e-commerce clothing store with a custom dress designing feature. Users can design their own dress, and the application processes the order and sends it to a tailor for manufacturing and delivery.
 
 
 
